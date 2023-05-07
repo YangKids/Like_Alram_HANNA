@@ -28,30 +28,30 @@
 		resultMap="articleMap">
 		SELECT *
 		FROM Article
-		WHERE articleId = #{id};
+		WHERE id = #{id};
 	</select>
 
 	<!-- 게시글 등록 -->
 	<insert id="insertArticle" parameterType="Article"
-		keyProperty="articleId" useGeneratedKeys="true">
-		INSERT INTO Article(boardId,articleId,isAnonymous,title,writerId,content)
+		keyProperty="id" useGeneratedKeys="true">
+		INSERT INTO Article()
 		VALUES
-		(#{boardId}, #{articleId},#{isAnonymous}, #{title}, #{writerId}, #{content})
+		(#{boardId}, #{articleId}, #{title}, #{writer}, #{content})
 	</insert>
 
 	<!-- 게시글 삭제 -->
 	<delete id="deleteArticle" parameterType="int">
-		DELETE FROM Article
-		WHERE articleId
+		DELETE FROM article
+		WHERE id
 		= #{id}
 	</delete>
 
 	<!-- 조회수 증가 -->
 	<update id="updateViewCnt" parameterType="int">
-		UPDATE Article
+		UPDATE article
 		SET
 		viewCnt = viewCnt+1
-		WHERE articleId = #{id}
+		WHERE id = #{id}
 	</update>
 
 
@@ -61,7 +61,7 @@
 		SET title
 		=
 		#{title}, content=#{content}, regDate = now()
-		WHERE articleId=#{id}
+		WHERE id=#{id}
 	</update>
 
 	<!-- 검색기능 -->
@@ -75,24 +75,8 @@
 		<if test="orderBy != 'none'">
 			ORDER BY ${orderBy} ${orderByDir}
 		</if>
+
+
 	</select>
-	
-	<!-- 좋아요 수 총개수  -->
-	<!-- 지금 이거 잘못된거같은데?? update가 계속되는거잖아.아아아아ㅏㅇ아아ㅓㄹ낭러ㅏ아아....아? -->
-<!-- 	<update id="updateLikeCnt" parameterType="Article">
-		UPDATE article as a INNER JOIN articleLike as l
-		ON a.articleId = l.articleId AND a.writerId = l.userId
-		SET a.likeCnt = a.likeCnt+1;
-	</update>
- -->
- 	<!-- <select id="updateLikeCnt" parameterType="int" resultType="int">
- 		SELECT COUNT(*) FROM ArticleLike WHERE articleId=#{id};
- 	</select> -->
- 	<update id="updateLikeCnt" parameterType="int">
-		UPDATE Article
-		SET
-		likeCnt = (SELECT COUNT(*) FROM ArticleLike WHERE articleId=#{id})
-		WHERE articleId = #{id}
-	</update>
- 	
+
 </mapper>

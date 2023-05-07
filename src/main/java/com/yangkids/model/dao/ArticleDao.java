@@ -23,7 +23,10 @@ public interface ArticleDao {
 
 	// 조회수 증가
 	public void updateViewCnt(int id);
-	
+		
 	//검색기능
 	public List<Article> search(SearchCondition condition);
+	
+	// 좋아요 개수
+	public void updateLikeCnt(int id);
 }
