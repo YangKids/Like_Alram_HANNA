@@ -35,11 +35,8 @@ public class ArticleLikeRestController {
 	public ResponseEntity<?> likeup(@RequestBody ArticleLike articleLike, ArticleLike articleId, ArticleLike userId) {
 		if(articleLikeService.selectLike(articleLike)==0) {			
 			articleLikeService.insert(articleLike);
-			return new ResponseEntity<Void>(HttpStatus.OK);
-		}else {
-			// 아... 처리를 어떻게 하지...
-			return new ResponseEntity<String>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
+		return new ResponseEntity<Void>(HttpStatus.OK);
 		
 	}
 	// 2. 좋아요 취소(delete)
@@ -47,10 +44,7 @@ public class ArticleLikeRestController {
 	public ResponseEntity<?> likedown(@RequestBody ArticleLike articleLike, ArticleLike articleId, ArticleLike userId){
 		if(articleLikeService.selectLike(articleLike)==1) {
 			articleLikeService.delete(articleLike);
-			return new ResponseEntity<Void>(HttpStatus.OK);			
-		}else {
-			// 에러를 띄우면 안되는데
-			return new ResponseEntity<Void>(HttpStatus.SERVICE_UNAVAILABLE);
 		}
+		return new ResponseEntity<Void>(HttpStatus.OK);			
 	}
 }
